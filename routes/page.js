@@ -11,76 +11,76 @@ exports.index = function(req, res) {
 
 //傳統輸入 
 exports.post = function(req, res) {
-    //console.log(req.body);
-    //res.render('pages/success');
-    mc.connect('mongodb://zitim:999TIMTI@ds115738.mlab.com:15738/messageboard', (err,db) => {
-        var collection = db.collection('test2');
+    // //console.log(req.body);
+    // //res.render('pages/success');
+    // mc.connect('mongodb://zitim:999TIMTI@ds115738.mlab.com:15738/messageboard', (err,db) => {
+    //     var collection = db.collection('test2');
 
-        var Today = new Date();
-        var str=(Today.getFullYear()+ " 年 " + (Today.getMonth()+1) + " 月 " + Today.getDate() + " 日");
-    //新增資料
-        var text = req.body.text.replace( /[\r\n\"]/g , '' );
-        console.log(text);
+    //     var Today = new Date();
+    //     var str=(Today.getFullYear()+ " 年 " + (Today.getMonth()+1) + " 月 " + Today.getDate() + " 日");
+    // //新增資料
+    //     var text = req.body.text.replace( /[\r\n\"]/g , '' );
+    //     console.log(text);
 
-        var data = {
-            title: str,
-            message: text,
-        };
-        collection.insert(data, (err, result) => {
-            if(!err){
-                //console.log(result);
-            }else{
-                console.log(err);
-            }
-        db.close()
-        });
-    });
-    res.render('pages/success');
+    //     var data = {
+    //         title: str,
+    //         message: text,
+    //     };
+    //     collection.insert(data, (err, result) => {
+    //         if(!err){
+    //             //console.log(result);
+    //         }else{
+    //             console.log(err);
+    //         }
+    //     db.close()
+    //     });
+    // });
+    // res.render('pages/success');
 };
 
 //刪除
 exports.delete = function(req, res) {
     
-    mc.connect('mongodb://zitim:999TIMTI@ds115738.mlab.com:15738/messageboard', (err,db) => {
-        var collection = db.collection('test2');
+    // mc.connect('mongodb://zitim:999TIMTI@ds115738.mlab.com:15738/messageboard', (err,db) => {
+    //     var collection = db.collection('test2');
 
-        console.log(req.body.id);
-        var condition = {"_id": ObjectId(req.body.id)};
-        collection.remove(condition, (err, result) => {
-            if(!err){
-                res.send('success');
-            }else{
-                res.send('error');
-            }
-        db.close()
-        });
-    });
+    //     console.log(req.body.id);
+    //     var condition = {"_id": ObjectId(req.body.id)};
+    //     collection.remove(condition, (err, result) => {
+    //         if(!err){
+    //             res.send('success');
+    //         }else{
+    //             res.send('error');
+    //         }
+    //     db.close()
+    //     });
+    // });
 
 }
 
 //編輯
 exports.edit = function(req, res) {
     
-    mc.connect('mongodb://zitim:999TIMTI@ds115738.mlab.com:15738/messageboard', (err,db) => {
-        var collection = db.collection('test2');
+    // mc.connect('mongodb://zitim:999TIMTI@ds115738.mlab.com:15738/messageboard', (err,db) => {
+    //     var collection = db.collection('test2');
 
         
-        req.body.new_mess = req.body.new_mess.replace( /[\r\n\"]/g , '' );
-        console.log(req.body.old_mess);
-        console.log(req.body.new_mess);
+    //     req.body.new_mess = req.body.new_mess.replace( /[\r\n\"]/g , '' );
+    //     console.log(req.body.old_mess);
+    //     console.log(req.body.new_mess);
 
-        var condition = {"message": req.body.old_mess};
-        var new_str = {$set: {"message": req.body.new_mess}};
-        collection.update(condition, new_str, (err, result) => {
-            if(!err){
-                //console.log(result);
-                res.send('success');
-            }else{
-                res.send('error');
-            }
-        db.close();
-        });
-    });
+    //     var condition = {"message": req.body.old_mess};
+    //     var new_str = {$set: {"message": req.body.new_mess}};
+    //     collection.update(condition, new_str, (err, result) => {
+    //         if(!err){
+    //             //console.log(result);
+    //             res.send('success');
+    //         }else{
+    //             res.send('error');
+    //         }
+    //     db.close();
+    //     });
+    // });
 
 }
 
