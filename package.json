@@ -1,12 +1,15 @@
 {
-  "name": "gonsakon",
+  "name": "zitim",
   "version": "1.0.0",
   "description": "express get and post router sample",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },"repository": {
+    "type": "git",
+    "url": "https://github.com/zitim/messageboard.git"
   },
-  "author": "gonsakon",
+  "author": "zitim",
   "license": "MIT",
   "dependencies": {
     "body-parser": "^1.14.0",
@@ -14,6 +17,14 @@
     "express": "^4.13.3",
     "express-partials": "^0.3.0",
     "serve-favicon": "^2.3.0",
-    "serve-static": "^1.10.0"
+    "serve-static": "^1.10.0",
+    "cheerio": "^0.22.0",
+    "db": "^1.0.6",
+    "mongo": "^0.1.0",
+    "mongodb": "^2.2.12",
+    "nodemon": "^1.11.0",
+    "request": "^2.79.0",
+    "test": "^0.6.0"
+    
   }
 }
