@@ -3,39 +3,74 @@ var mongodb = require('mongodb');
 var ObjectId = require('mongodb').ObjectID;
 var mc = mongodb.MongoClient;
 
-//列出資料
+var a=[];
+var b=[];
+
+
 exports.index = function(req, res) {
     res.render('pages/index');
-    
+};
+//列出資料
+exports.list = function(req, res) {
+    //res.render('pages/index');
+    mc.connect('mongodb://zitim:zitim@ds139288.mlab.com:39288/googlemaps', (err,db) => {
+        var collection = db.collection('res_favorite');
+
+        collection.find().toArray((err, result) => {
+        
+            if(!err){
+                for (var i = 0; i <result.length ; i++) {
+                      a[i]=result[i];
+                }
+                //console.log(a);
+                res.send(a);
+                // res.render('pages/index', {
+                //              listdata: 1
+                // });
+            }else{
+                console.log(err);
+            } 
+            db.close()
+
+        }); 
+    });
 };
 
 //傳統輸入 
-exports.post = function(req, res) {
-    // //console.log(req.body);
-    // //res.render('pages/success');
-    // mc.connect('mongodb://zitim:999TIMTI@ds115738.mlab.com:15738/messageboard', (err,db) => {
-    //     var collection = db.collection('test2');
+exports.collect = function(req, res) {
+    
+    mc.connect('mongodb://zitim:zitim@ds139288.mlab.com:39288/googlemaps', (err,db) => {
+        var collection = db.collection('res_favorite');
 
-    //     var Today = new Date();
-    //     var str=(Today.getFullYear()+ " 年 " + (Today.getMonth()+1) + " 月 " + Today.getDate() + " 日");
-    // //新增資料
-    //     var text = req.body.text.replace( /[\r\n\"]/g , '' );
-    //     console.log(text);
+    //新增資料
+        var res_id = req.body.res_id.replace( /[\r\n\"]/g , '' );
+        var res_name = req.body.res_name.replace( /[\r\n\"]/g , '' );
+        var res_address = req.body.res_address.replace( /[\r\n\"]/g , '' );
+        var res_phone = req.body.res_phone.replace( /[\r\n\"]/g , '' );
+        var res_time = req.body.res_time.replace( /[\r\n\"]/g , '' );
+        //console.log(text);
 
-    //     var data = {
-    //         title: str,
-    //         message: text,
-    //     };
-    //     collection.insert(data, (err, result) => {
-    //         if(!err){
-    //             //console.log(result);
-    //         }else{
-    //             console.log(err);
-    //         }
-    //     db.close()
-    //     });
-    // });
-    // res.render('pages/success');
+        var data = {
+            //title: str,
+            res_id: res_id,
+            res_name: res_name,
+            res_address: res_address,
+            res_phone: res_phone,
+            res_time: res_time,
+            res_favorite: 'true'
+        };
+        collection.insert(data, (err, result) => {
+            if(!err){
+                //console.log(result);
+                res.send('success');
+            }else{
+                console.log(err);
+
+            }
+        db.close()
+        });
+    });
+    //res.render('pages/success');
 };
 
 //刪除
@@ -110,11 +145,7 @@ exports.getAjax = function(req, res) {
 
 //get取得Json
 exports.getJson = function(req, res){
-    var tours = [
-        { id: 0, name: 'Hood River', price: 99.99 },
-        { id: 1, name: 'Oregon Coast', price: 149.95}
-    ];
 
-    res.json(tours);
+    
 };
 
